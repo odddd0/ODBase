@@ -12,9 +12,11 @@ public:
 public:
     static void GetSqlCreateTable(std::string &sql_);
     static void GetSqlSelect(std::string &sql_);
+    static void GetSqlDelete(std::string &sql_, const int &id_);
+    void GetSqlUpdate(std::string &sql_);
     void GetSqlInsert(std::string &sql_);
 
-private:
+public:
     std::string _name;
     int _score;
 

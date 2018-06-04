@@ -12,6 +12,7 @@ public:
 
 public:
     virtual void GetSqlInsert(std::string &sql_) = 0;
+    virtual void GetSqlUpdate(std::string &sql_) = 0;
 
 public:
     int _preId;

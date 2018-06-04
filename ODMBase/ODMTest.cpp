@@ -43,6 +43,22 @@ void ODMTest::GetSqlSelect(std::string &sql_)
     sql_ += "select * from TestTable";
 }
 
+void ODMTest::GetSqlDelete(std::string &sql_, const int &id_)
+{
+    GetSqlCreateTable(sql_);
+    sql_ += "delete from TestTable where Id='" + std::to_string(id_) + "';";
+}
+
+void ODMTest::GetSqlUpdate(std::string &sql_)
+{
+    GetSqlCreateTable(sql_);
+    sql_ += "update TestTable set "
+            "Id='" + std::to_string(_id) +
+            "',Name='" + _name +
+            "',Score='" + std::to_string(_score) +
+            "' where Id='" + std::to_string(_preId) + "';";
+}
+
 void ODMTest::GetSqlInsert(std::string &sql_)
 {
     GetSqlCreateTable(sql_);

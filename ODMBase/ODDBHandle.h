@@ -5,6 +5,12 @@
 #include "ODMBase.h"
 #include "ODSqliteHandle.h"
 
+/**
+ * @brief The ODDBHandle class
+ *  基于ODMBase数据类型的sqlite快速使用工具类
+ *  已实现 Select、Insert、Delete、Update
+ */
+
 class ODDBHandle
 {
 public:
@@ -27,6 +33,19 @@ public:
         return SelectImpl<T>(list, errMsg);
     }
 
+    template<class T>
+    bool Delete(const IntList &list)
+    {
+        std::string errMsg;
+        return DeleteImpl<T>(list, errMsg);
+    }
+
+    template<class T>
+    bool Delete(const IntList &list, std::string &errMsg)
+    {
+        return DeleteImpl<T>(list, errMsg);
+    }
+
     bool Insert(const ODMBaseList &list)
     {
         std::string errMsg;
@@ -35,6 +54,16 @@ public:
     bool Insert(const ODMBaseList &list, std::string &errMsg)
     {
         return InsertImpl(list, errMsg);
+    }
+
+    bool Update(const ODMBaseList &list)
+    {
+        std::string errMsg;
+        return UpdateImpl(list, errMsg);
+    }
+    bool Update(const ODMBaseList &list, std::string &errMsg)
+    {
+        return UpdateImpl(list, errMsg);
     }
 
 private:
@@ -52,7 +81,21 @@ private:
         return Result;
     }
 
+    template<class T>
+    bool DeleteImpl(const IntList &list, std::string &errMsg)
+    {
+        bool Result = false;
+        std::string sql = "";
+        std::for_each(list.begin(), list.end(), [&sql](const int &x){
+            T::GetSqlDelete(sql, x);
+        });
+        Result = ODSqliteHandle::Exec(_DBPath, sql, errMsg);
+        return Result;
+    }
+
     bool InsertImpl(const ODMBaseList &list, std::string &errMsg);
+
+    bool UpdateImpl(const ODMBaseList &list, std::string &errMsg);
 private:
     ODDBHandle();
     ~ODDBHandle();
