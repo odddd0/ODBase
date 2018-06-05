@@ -6,19 +6,23 @@ ODTimeUtil::ODTimeUtil()
 
 }
 
-void ODTimeUtil::Timestamp2String(const int &timestamp_, const std::string &format_, std::string &str_)
+std::string ODTimeUtil::Timestamp2String(const int &timestamp_, const std::string &format_)
 {
+    std::string Result = "";
     struct tm *tmpTm;
     time_t lt;
     char str[80];
     lt = timestamp_;
     tmpTm=localtime(&lt);
     strftime(str, 100, format_.c_str(), tmpTm);
-    str_ = str;
+    Result = str;
+    return Result;
 }
 
-void ODTimeUtil::Duration2String(const int &timestamp_, const std::string &format_, std::string &str_)
+std::string ODTimeUtil::Duration2String(const int &timestamp_, const std::string &format_)
 {
+    std::string Result = "";
+
     int tmpDay = timestamp_ / 86400;
     int tmpInt = timestamp_ % 86400;
 
@@ -28,7 +32,6 @@ void ODTimeUtil::Duration2String(const int &timestamp_, const std::string &forma
     int tmpMinute = tmpInt / 60;
     int tmpSecond = tmpInt % 60;
 
-    str_.clear();
     bool nextTrans = false;
     int numLength = 0;
     std::string tmpStr;
@@ -53,7 +56,7 @@ void ODTimeUtil::Duration2String(const int &timestamp_, const std::string &forma
                 {
                     tmpStr = "0" + tmpStr;
                 }
-                str_ += tmpStr;
+                Result += tmpStr;
                 numLength = 0;
                 nextTrans = false;
             }
@@ -66,31 +69,27 @@ void ODTimeUtil::Duration2String(const int &timestamp_, const std::string &forma
             }
             else
             {
-                str_.push_back(x);
+                Result.push_back(x);
             }
         }
     });
+    return Result;
 }
 
 bool ODTimeUtil::IsSameDay(const int &timstamp1_, const int &timstamp2_)
 {
-    std::string tmpStr1, tmpStr2;
-    Timestamp2String(timstamp1_, "%y%m%d", tmpStr1);
-    Timestamp2String(timstamp2_, "%y%m%d", tmpStr2);
-    return (tmpStr1 == tmpStr2);
-
-    struct tm *tmpTm1, *tmpTm2;
+    struct tm tmpTm1, tmpTm2;
     time_t lt;
     lt = timstamp1_;
-    tmpTm1=localtime(&lt);
+    tmpTm1=*localtime(&lt);
     lt = timstamp2_;
-    tmpTm2=localtime(&lt);
+    tmpTm2=*localtime(&lt);
 
-    if (tmpTm1->tm_year != tmpTm2->tm_year)
+    if (tmpTm1.tm_year != tmpTm2.tm_year)
     {
         return false;
     }
-    else if (tmpTm1->tm_yday != tmpTm2->tm_yday)
+    else if (tmpTm1.tm_yday != tmpTm2.tm_yday)
     {
         return false;
     }
