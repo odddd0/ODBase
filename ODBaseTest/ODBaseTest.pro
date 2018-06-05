@@ -17,7 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     gtest_main.cc \
     ODSqliteHandle_test.cpp \
-    ODTimeUtilTest.cpp
+    ODTimeUtilTest.cpp \
+    ODVectorUtilTest.cpp
 
 INCLUDEPATH += $$PWD/../3rd/gtest
 DEPENDPATH += $$PWD/../3rd/gtest
