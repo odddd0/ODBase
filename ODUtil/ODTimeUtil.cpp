@@ -71,3 +71,32 @@ void ODTimeUtil::Duration2String(const int &timestamp_, const std::string &forma
         }
     });
 }
+
+bool ODTimeUtil::IsSameDay(const int &timstamp1_, const int &timstamp2_)
+{
+    std::string tmpStr1, tmpStr2;
+    Timestamp2String(timstamp1_, "%y%m%d", tmpStr1);
+    Timestamp2String(timstamp2_, "%y%m%d", tmpStr2);
+    return (tmpStr1 == tmpStr2);
+
+    struct tm *tmpTm1, *tmpTm2;
+    time_t lt;
+    lt = timstamp1_;
+    tmpTm1=localtime(&lt);
+    lt = timstamp2_;
+    tmpTm2=localtime(&lt);
+
+    if (tmpTm1->tm_year != tmpTm2->tm_year)
+    {
+        return false;
+    }
+    else if (tmpTm1->tm_yday != tmpTm2->tm_yday)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+
+}
