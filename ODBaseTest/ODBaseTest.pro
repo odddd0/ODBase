@@ -16,7 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     gtest_main.cc \
-    ODSqliteHandle_test.cpp
+    ODSqliteHandle_test.cpp \
+    ODTimeUtilTest.cpp
 
 INCLUDEPATH += $$PWD/../3rd/gtest
 DEPENDPATH += $$PWD/../3rd/gtest
@@ -30,3 +31,6 @@ macx: PRE_TARGETDEPS += $$PWD/../3rd/gtest/lib/libgtest.a
 
 macx: LIBS += -L$$PWD/../build-ODMBase-Desktop_Qt_5_11_0_clang_64bit-Debug/ -lODMBase
 macx: PRE_TARGETDEPS += $$PWD/../build-ODMBase-Desktop_Qt_5_11_0_clang_64bit-Debug/libODMBase.a
+
+macx: LIBS += -L$$PWD/../build-ODUtil-Desktop_Qt_5_11_0_clang_64bit-Debug/ -lODUtil
+macx: PRE_TARGETDEPS += $$PWD/../build-ODUtil-Desktop_Qt_5_11_0_clang_64bit-Debug/libODUtil.a
