@@ -35,44 +35,78 @@ std::string ODTimeUtil::Duration2String(const int &timestamp_, const std::string
     bool nextTrans = false;
     int numLength = 0;
     std::string tmpStr;
-    std::for_each(format_.begin(), format_.end(), [&](const char &x){
-        if (nextTrans)
+    if (format_.empty())
+    {
+        // default format
+        if (tmpDay)
         {
-            if (x >= 0x30 && x <= 0x39)
+            Result += std::to_string(tmpDay) + "d ";
+        }
+        if (tmpHour)
+        {
+            Result += std::to_string(tmpHour) + "h";
+        }
+        if (tmpMinute)
+        {
+            tmpStr = std::to_string(tmpMinute);
+            while (tmpStr.length() < 2)
             {
-                numLength = x - 0x30;
+                tmpStr = "0" + tmpStr;
+            }
+            Result += tmpStr + "m";
+        }
+        if (Result.empty())
+        {
+            tmpStr = std::to_string(tmpSecond);
+            while (tmpStr.length() < 2)
+            {
+                tmpStr = "0" + tmpStr;
+            }
+            Result += tmpStr + "s";
+        }
+    }
+    else
+    {
+        // custom format
+        std::for_each(format_.begin(), format_.end(), [&](const char &x){
+            if (nextTrans)
+            {
+                if (x >= 0x30 && x <= 0x39)
+                {
+                    numLength = x - 0x30;
+                }
+                else
+                {
+                    switch (x)
+                    {
+                    case 'd':tmpStr = std::to_string(tmpDay);break;
+                    case 'H':tmpStr = std::to_string(tmpHour);break;
+                    case 'M':tmpStr = std::to_string(tmpMinute);break;
+                    case 'S':tmpStr = std::to_string(tmpSecond);break;
+                    default:tmpStr.clear();break;
+                    }
+                    while (tmpStr.length() < numLength && !tmpStr.empty())
+                    {
+                        tmpStr = "0" + tmpStr;
+                    }
+                    Result += tmpStr;
+                    numLength = 0;
+                    nextTrans = false;
+                }
             }
             else
             {
-                switch (x)
+                if (x == '%')
                 {
-                case 'd':tmpStr = std::to_string(tmpDay);break;
-                case 'H':tmpStr = std::to_string(tmpHour);break;
-                case 'M':tmpStr = std::to_string(tmpMinute);break;
-                case 'S':tmpStr = std::to_string(tmpSecond);break;
-                default:tmpStr.clear();break;
+                    nextTrans = true;
                 }
-                while (tmpStr.length() < numLength && !tmpStr.empty())
+                else
                 {
-                    tmpStr = "0" + tmpStr;
+                    Result.push_back(x);
                 }
-                Result += tmpStr;
-                numLength = 0;
-                nextTrans = false;
             }
-        }
-        else
-        {
-            if (x == '%')
-            {
-                nextTrans = true;
-            }
-            else
-            {
-                Result.push_back(x);
-            }
-        }
-    });
+        });
+    }
     return Result;
 }
 
