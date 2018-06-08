@@ -65,6 +65,34 @@ std::string ODTimeUtil::Duration2String(const int &timestamp_, const std::string
             Result += tmpStr + "s";
         }
     }
+    else if (format_ == "__DIGITAL__")
+    {
+        // digital format like 00:01:22
+        if (tmpDay)
+        {
+            Result += std::to_string(tmpDay) + "-";
+        }
+        tmpStr = std::to_string(tmpHour);
+        while (tmpStr.length() < 2)
+        {
+            tmpStr = "0" + tmpStr;
+        }
+        Result += tmpStr + ":";
+
+        tmpStr = std::to_string(tmpMinute);
+        while (tmpStr.length() < 2)
+        {
+            tmpStr = "0" + tmpStr;
+        }
+        Result += tmpStr + ":";
+
+        tmpStr = std::to_string(tmpSecond);
+        while (tmpStr.length() < 2)
+        {
+            tmpStr = "0" + tmpStr;
+        }
+        Result += tmpStr;
+    }
     else
     {
         // custom format

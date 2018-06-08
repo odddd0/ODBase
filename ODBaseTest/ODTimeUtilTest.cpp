@@ -38,4 +38,19 @@ TEST(ODTimeUtil, Duration2Str)
     EXPECT_EQ("7h30m", tmpStr);
     tmpStr = ODTimeUtil::Duration2String(227002);
     EXPECT_EQ("2d 15h03m", tmpStr);
+
+    tmpStr = ODTimeUtil::Duration2String(12, "__DIGITAL__");
+    EXPECT_EQ("00:00:12", tmpStr);
+    tmpStr = ODTimeUtil::Duration2String(72, "__DIGITAL__");
+    EXPECT_EQ("00:01:12", tmpStr);
+    tmpStr = ODTimeUtil::Duration2String(1002, "__DIGITAL__");
+    EXPECT_EQ("00:16:42", tmpStr);
+    tmpStr = ODTimeUtil::Duration2String(3002, "__DIGITAL__");
+    EXPECT_EQ("00:50:02", tmpStr);
+    tmpStr = ODTimeUtil::Duration2String(7002, "__DIGITAL__");
+    EXPECT_EQ("01:56:42", tmpStr);
+    tmpStr = ODTimeUtil::Duration2String(27002, "__DIGITAL__");
+    EXPECT_EQ("07:30:02", tmpStr);
+    tmpStr = ODTimeUtil::Duration2String(227002, "__DIGITAL__");
+    EXPECT_EQ("2-15:03:22", tmpStr);
 }
