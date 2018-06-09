@@ -61,3 +61,30 @@ TEST(ODTimeUtil, Duration2Str)
     tmpStr = ODTimeUtil::Duration2String(227002, "__DIGITAL__");
     EXPECT_EQ("2-15:03:22", tmpStr);
 }
+
+TEST(ODTimeUtil, DateJump)
+{
+    std::string tmpStr = "18-01-22";
+    ODTimeUtil::DateJump(tmpStr, -7);
+    EXPECT_EQ("18-01-15", tmpStr);
+
+    tmpStr = "18-02-22";
+    ODTimeUtil::DateJump(tmpStr, -7);
+    EXPECT_EQ("18-02-15", tmpStr);
+
+    tmpStr = "17-02-28";
+    ODTimeUtil::DateJump(tmpStr, -7);
+    EXPECT_EQ("17-02-21", tmpStr);
+
+    tmpStr = "17-01-01";
+    ODTimeUtil::DateJump(tmpStr, -7);
+    EXPECT_EQ("16-12-25", tmpStr);
+
+    tmpStr = "18-12-31";
+    ODTimeUtil::DateJump(tmpStr, 7);
+    EXPECT_EQ("19-01-07", tmpStr);
+
+    tmpStr = "17-02-28";
+    ODTimeUtil::DateJump(tmpStr, 30);
+    EXPECT_EQ("17-03-30", tmpStr);
+}

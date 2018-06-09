@@ -168,3 +168,20 @@ bool ODTimeUtil::IsSameDay(const int &timstamp1_, const int &timstamp2_)
     }
 
 }
+
+void ODTimeUtil::DateJump(std::string &date_, const int &count_)
+{
+    struct tm tmpTm;
+    tmpTm.tm_year = std::stoi("20" + date_.substr(0, 2)) - 1900;
+    tmpTm.tm_mon = std::stoi(date_.substr(3, 2)) - 1;
+    tmpTm.tm_mday = std::stoi(date_.substr(6, 2)) + count_;
+    tmpTm.tm_hour = 0;
+    tmpTm.tm_min = 0;
+    tmpTm.tm_sec = 0;
+    tmpTm.tm_isdst = 0;
+    time_t lt = mktime(&tmpTm);
+
+    char str[80];
+    strftime(str, 100, "%y-%m-%d", &tmpTm);
+    date_ = str;
+}
