@@ -185,3 +185,31 @@ void ODTimeUtil::DateJump(std::string &date_, const int &count_)
     strftime(str, 100, "%y-%m-%d", &tmpTm);
     date_ = str;
 }
+
+bool ODTimeUtil::CalBillList(const int &timestamp_, const int &billDates_, int &index_, std::string &dates_)
+{
+    bool Result = false;
+    index_ = 0;
+
+    struct tm curTm, inTm;
+    time_t curTime, lt;
+
+    // current time
+    time(&curTime);
+    curTm = *localtime(&curTime);
+    // in time
+    lt = timestamp_;
+    inTm = *localtime(&lt);
+
+    if (curTime > lt)
+    {
+        curTm.tm_mday -= billDates_ - 1;
+        inTm.tm_mday -= billDates_ - 1;
+        mktime(&curTm);
+        mktime(&inTm);
+        index_ = ((curTm.tm_year - inTm.tm_year) * 12) + (curTm.tm_mon - inTm.tm_mon);
+        Result = true;
+    }
+
+    return Result;
+}

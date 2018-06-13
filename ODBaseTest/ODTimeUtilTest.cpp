@@ -88,3 +88,13 @@ TEST(ODTimeUtil, DateJump)
     ODTimeUtil::DateJump(tmpStr, 30);
     EXPECT_EQ("17-03-30", tmpStr);
 }
+
+TEST(ODTimeUtil, CalBillList)
+{
+    int index;
+    std::string tmpStr;
+    EXPECT_TRUE(ODTimeUtil::CalBillList(1514736000, 10, index, tmpStr));
+    std::cout << "20180101: " << index << std::endl;
+    EXPECT_TRUE(ODTimeUtil::CalBillList(1517414400, 10, index, tmpStr));
+    std::cout << "20180201: " << index << std::endl;
+}
