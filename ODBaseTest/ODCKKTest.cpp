@@ -13,27 +13,31 @@
 TEST(ODCKK, ToString)
 {
     CKKPtr ckk = std::make_shared<ODCKK>();
-    ckk->appendData("1", "11", "111");
-    ckk->appendData("1", "11", "112");
-    ckk->appendData("1", "12", "121");
-    ckk->appendData("1", "13", "131");
-    ckk->appendData("2", "21", "211");
-    ckk->appendData("2", "22", "221");
-    ckk->appendData("2", "23", "231");
-    ckk->appendData("3", "31", "311");
+//    CKKPtr ckk;
+    ckk.reset();
+    ckk = std::make_shared<ODCKK>();
+    EXPECT_TRUE(ckk->appendData("1", "11", "111"));
+    EXPECT_TRUE(ckk->appendData("1", "11", "112"));
+    EXPECT_TRUE(ckk->appendData("1", "12", "121"));
+    EXPECT_TRUE(ckk->appendData("1", "13", "131"));
+    EXPECT_TRUE(ckk->appendData("2", "21", "211"));
+    EXPECT_TRUE(ckk->appendData("2", "22", "221"));
+    EXPECT_TRUE(ckk->appendData("2", "23", "231"));
+    EXPECT_TRUE(ckk->appendData("3", "31", "311"));
 
     StringList tmpList;
-    ckk->classifyList(tmpList);
-    ckk->kindFirstList(tmpList, "1");
-    ckk->kindFirstList(tmpList, "2");
-    ckk->kindFirstList(tmpList, "3");
-    ckk->kindFirstList(tmpList, "4");
-    ckk->kindSecondList(tmpList, "1", "11");
-    ckk->kindSecondList(tmpList, "1", "13");
-    ckk->kindSecondList(tmpList, "2", "21");
-    ckk->kindSecondList(tmpList, "3", "31");
-    ckk->kindSecondList(tmpList, "3", "32");
-    ckk->kindFirstList(tmpList);
-    ckk->kindSecondList(tmpList, "2");
-    ckk->kindSecondList(tmpList);
+    EXPECT_TRUE(ckk->classifyList(tmpList));
+    EXPECT_EQ(tmpList.size(), 2);
+    EXPECT_TRUE(ckk->kindFirstList(tmpList, "1"));
+    EXPECT_TRUE(ckk->kindFirstList(tmpList, "2"));
+    EXPECT_TRUE(ckk->kindFirstList(tmpList, "3"));
+    EXPECT_FALSE(ckk->kindFirstList(tmpList, "4"));
+    EXPECT_TRUE(ckk->kindSecondList(tmpList, "1", "11"));
+    EXPECT_TRUE(ckk->kindSecondList(tmpList, "1", "13"));
+    EXPECT_TRUE(ckk->kindSecondList(tmpList, "2", "21"));
+    EXPECT_TRUE(ckk->kindSecondList(tmpList, "3", "31"));
+    EXPECT_FALSE(ckk->kindSecondList(tmpList, "3", "32"));
+    EXPECT_TRUE(ckk->kindFirstList(tmpList));
+    EXPECT_TRUE(ckk->kindSecondList(tmpList, "2"));
+    EXPECT_TRUE(ckk->kindSecondList(tmpList));
 }
