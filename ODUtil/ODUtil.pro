@@ -23,12 +23,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     ODTimeUtil.cpp \
-    ODVectorUtil.cpp
+    ODVectorUtil.cpp \
+    ODCKK.cpp
 
 HEADERS += \
         ODUtil.h \
     ODTimeUtil.h \
-    ODVectorUtil.h
+    ODVectorUtil.h \
+    ODCKK.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

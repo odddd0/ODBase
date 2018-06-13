@@ -18,7 +18,8 @@ SOURCES += \
     gtest_main.cc \
     ODSqliteHandle_test.cpp \
     ODTimeUtilTest.cpp \
-    ODVectorUtilTest.cpp
+    ODVectorUtilTest.cpp \
+    ODCKKTest.cpp
 
 INCLUDEPATH += $$PWD/../3rd/gtest
 DEPENDPATH += $$PWD/../3rd/gtest
