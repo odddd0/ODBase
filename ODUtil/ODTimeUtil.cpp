@@ -186,9 +186,8 @@ void ODTimeUtil::DateJump(std::string &date_, const int &count_)
     date_ = str;
 }
 
-bool ODTimeUtil::CalBillList(const int &timestamp_, const int &billDates_, int &index_, std::string &dates_)
+bool ODTimeUtil::CalcuteBillList(const int &timestamp_, const int &billDates_, int &index_)
 {
-    bool Result = false;
     index_ = 0;
 
     struct tm curTm, inTm;
@@ -208,8 +207,7 @@ bool ODTimeUtil::CalBillList(const int &timestamp_, const int &billDates_, int &
         mktime(&curTm);
         mktime(&inTm);
         index_ = ((curTm.tm_year - inTm.tm_year) * 12) + (curTm.tm_mon - inTm.tm_mon);
-        Result = true;
     }
 
-    return Result;
+    return index_ >= 0;
 }
